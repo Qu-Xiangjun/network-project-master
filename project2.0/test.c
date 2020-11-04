@@ -10,11 +10,12 @@ unsigned char data[] = "Hello! This is a frame payload data. It's a computer pro
 
 
 int main(int argc, char **argv)
-{
-    /* example1: success */
-    unsigned char temp[1500];
-    memcpy(temp,&data[0],5);
-    printf("%s",temp);
+{	
+	unsigned char ttl;
+	unsigned int ttl_temp = 1500;
+	ttl = ttl_temp;
+	printf("%0x\n",ttl_temp);
+	printf("%0x",ttl);
 	return 0;
 }
 

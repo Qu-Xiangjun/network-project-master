@@ -54,7 +54,7 @@ void analyse_datagram(){
     unsigned char Destination_address[4];
     unsigned char *Option; 
     unsigned int Option_len;
-    unsigned char *payload; 
+    unsigned char payload[65535]; 
     unsigned short payload_len;
 
 
@@ -73,8 +73,9 @@ void analyse_datagram(){
     unsigned short total_identification;
 
     /* read frame length */
-    while (fread(&TTL,sizeof(TTL),1,file)){     
-        fread(&datagram, sizeof(char), TTL, file);
+    while (fread(&Total_length,sizeof(unsigned int),1,file)){     
+    	printf("Total_length %d\n",Total_length); 
+        fread(&datagram, sizeof(char), Total_length, file);
         /* 取Version 和 IHL */
         unsigned char temp;
         memcpy(&temp, &datagram[0],1);
@@ -88,10 +89,8 @@ void analyse_datagram(){
 
         /* 取DF、MF、Fragment Offset */
         memcpy(&Fragment_offset,&datagram[6],2);
-        DF = Fragment_offset & 0x4000;
-        DF = DF >> 14;
-        MF = Fragment_offset & 0x2000;
-        MF = MF >> 13;
+        DF = (Fragment_offset & 0x4000) >> 14;
+        MF = (Fragment_offset & 0x2000) >> 13;
         Fragment_offset  = Fragment_offset & 0x1fff;
 
         memcpy(&TTL,&datagram[8],1);
@@ -134,6 +133,7 @@ void analyse_datagram(){
 
         /* 检查是否不用分片 */
         if(DF == 1){
+        	printf("[Error] DF = 1, Don't fragmentation.' : ");
             break;
         }
 
@@ -160,15 +160,17 @@ void analyse_datagram(){
         }else{
             if(total_identification != Identification) // 不是同一分片,跳过
                 continue;
-        }        
+        }   
+		
+		count ++;     
     }
     fclose(file);
     /* 清除文件内容 */
     FILE *clean = fopen("datalink_to_network.bin", "w");
     fclose(clean);
     
-    /* 计算Total length */
-    Total_length = payload_total_len + IHL*4;
+    // /* 计算Total length */
+    // Total_length = payload_total_len + IHL*4;
 
     /* 判断是否组装完全 */
     if(count-1 != max_offset/max_len){ // 前面来的片都是最大片长度，如若其数量不为count-1，则为组装完成

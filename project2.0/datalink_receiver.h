@@ -120,7 +120,7 @@ int receive_frame(){
         printf("\n");
         printf("\n");
 
-        /* payloadÐ´ÈëÖÐ¼äÎÄ¼þ£¬´«¸ønetwork²ã */
+        /* payloadå†™å…¥ä¸­é—´æ–‡ä»¶ï¼Œä¼ ç»™networkå±‚ */
         FILE *out = fopen("datalink_to_network.bin", "a");
         if(out == NULL)
         {
@@ -128,18 +128,19 @@ int receive_frame(){
             return 0;
         }
         fwrite(&payload_len,sizeof(unsigned int),1,out);
+        printf("payload_len %d\n",payload_len);
         fwrite(payload, sizeof(char), payload_len, out);
         fclose(out);
 
     }
     fclose(file);
-    /* Çå³ýÎÄ¼þÄÚÈÝ */
+    /* æ¸…é™¤æ–‡ä»¶å†…å®¹ */
     FILE *clean = fopen("pipe.bin", "w");
     fclose(clean);
 	
 	printf("[INFO] frame receiver process end.\n");
 
-    /* µ÷ÓÃnetwork²ã */
+    /* è°ƒç”¨networkå±‚ */
     analyse_datagram();
     return 0;
 }
