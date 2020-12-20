@@ -1,5 +1,5 @@
 /**
- * Name         : sender_mian.c 
+ * Name         : sender_main.c 
  * Author       : Qu Xiangjun
  * Version      : 2.0
  * Date         : 2020-11-1
