@@ -38,7 +38,7 @@ Compute_Network_Project
 
 ​		然后可看到命令行提示传输层UDP开始工作，其显示了源端口和目的端口号和传输的data内容（与输入的消息一致），同时得到校验和的内容，填入了头部，最终完成了UDP层传输。
 
-<img src="sender1.png" alt="sender1" style="zoom:60%;" />
+<img src="./Compute_Network_Project_master/sender1.png" alt="sender1" style="zoom:60%;" />
 
 ​		如下图二，网络层的ip数据报开始分片，第一个分片的数据报开始传输，其源地址和目的地址都打印了出来，然后做了校验和填写到头部，分片成功，其长度为最长的1500字节。
 
@@ -46,7 +46,7 @@ Compute_Network_Project
 
 ​		在如上的分片传输完成后，继续下面的分片传输，整个分片传输完成后可看到返回了传输成功的信息。
 
-<img src="E:\Study\Term5\Computer Network\network-project-master\20186471-屈湘钧-计网project\sender2.png" alt="sender2" style="zoom:60%;" />
+<img src="./Compute_Network_Project_master/sender2.png" alt="sender2" style="zoom:60%;" />
 
 ##### 接收端
 
@@ -56,10 +56,10 @@ Compute_Network_Project
 
 ​		网络层在链路层工作好后，开始从缓冲区接收所有的数据报，对其开始解析，对比ip地址是否正确，进行校验和检验，并循环组装所有解析好的数据报payload。将组装好的payload返回给传输层。
 
-<img src="E:\Study\Term5\Computer Network\network-project-master\20186471-屈湘钧-计网project\receiver1.png" alt="receiver1" style="zoom:60%;" />
+<img src="./Compute_Network_Project_master/receiver1.png" alt="receiver1" style="zoom:60%;" />
 
 ​		传输层的UDP接收程序开始，其检验数据的校验和看是否为0，然后进行端口校验，完成后，解析出data数据返回给应用层的调用程序。
 
 ​		最终应用层即main函数得到message，并打印在命令行的最后。
 
-<img src="E:\Study\Term5\Computer Network\network-project-master\20186471-屈湘钧-计网project\receiver2.png" alt="receiver2" style="zoom:60%;" />
+<img src="./Compute_Network_Project_master/receiver2.png" alt="receiver2" style="zoom:60%;" />
